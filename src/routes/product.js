@@ -4,7 +4,7 @@ const productRouter = express.Router()
 
 productRouter.get('/', () => {})
 productRouter.get('/:id', () => {})
-productRouter.post('/:id', () => {})
+productRouter.post('/', () => {})
 productRouter.put('/:id', () => {})
 productRouter.delete('/:id', () => {})
 
