@@ -1,7 +1,6 @@
-const { Sequelize } = require ("sequelize")
+const { Sequelize, Model } =  require('sequelize')
 
 class Database {
-
     constructor(){
         this.init()
     }
@@ -15,7 +14,6 @@ class Database {
             password: ""
         })
     }
-
 }
 
 module.exports = new Database()

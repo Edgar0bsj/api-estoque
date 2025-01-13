@@ -1,33 +1,36 @@
-const database = require('../../database/database')
+const { DataTypes } = require('sequelize');
+const database = require('../../database/conexao')
+
 
 class Organization {
     constructor(){
-        this.model = database.db.define('organization',{
+        this.model = database.db.define("organization",{
             id: {
-                type: database.db.Sequelize.INTERGER,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
             name: {
-                type: database.db.Sequelize.STRING,
+                type: DataTypes.STRING,
                 allowNull: false
             },
             address: {
-                type: database.db.Sequelize.STRING,
+                type: DataTypes.STRING,
                 allowNull: false
             },
             phone: {
-                type: database.db.Sequelize.STRING,
+                type: DataTypes.STRING,
                 allowNull: true
             },
             email: {
-                type: database.db.Sequelize.STRING,
+                type: DataTypes.STRING,
                 allowNull: false,
                 unique: true
             },
-
-        })
+        }
+        )
     }
 }
+
 
 module.exports = new Organization().model
