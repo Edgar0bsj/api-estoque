@@ -1,38 +1,41 @@
-const database = require('../../database/database')
+const { DataTypes } = require('sequelize');
+const database = require('../../database/conexao');
+const Organization = require('./organization');
+
 
 class Product {
     constructor(){
-        this.model = database.db.define('product',{
+        this.model = database.db.define("products",{
             id: {
-                type: database.db.Sequelize.INTERGER,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
             name: {
-                type: database.db.Sequelize.STRING,
+                type: DataTypes.STRING,
                 allowNull: false
             },
             description: {
-                type: database.db.Sequelize.STRING,
+                type: DataTypes.STRING,
                 allowNull: false,
                 unique: true
             },
             organizationId: {
-                type: database.db.Sequelize.STRING,
+                type: DataTypes.INTEGER,
                 references: {
                     model: Organization,
                     key: "id"
                 }
-            }
+            },
         })
-        this.model.belongsTo(Organization, {
+        this.model.belongsTo(Organization,{
             foreignKey: 'organizationId'
         })
-        Organization.hasMany(this.model,{
+        Organization.hasMany(this.model, {
             foreignKey: 'organizationId'
         })
     }
-
 }
+
 
 module.exports = new Product().model

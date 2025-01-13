@@ -7,3 +7,8 @@
 - jsonwebtoken
 - mysql2
 - sequelize
+
+## Cronograma
+- Database/
+- Model/
+- Routes/
