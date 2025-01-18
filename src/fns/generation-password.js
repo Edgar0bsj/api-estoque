@@ -1,5 +1,7 @@
+const crypto = require('crypto')
+
 function generationPassword(){
-    return "abc123"
+    return crypto.randomBytes(18).toString('hex')
 }
 
 module.exports = generationPassword
