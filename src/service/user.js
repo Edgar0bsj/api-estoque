@@ -1,8 +1,11 @@
 const ModelUser = require('../model/user')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const organization = require('../model/organization')
 
 const roles = ['admin', 'employee']
 const salt = 12
+const secretKey = "MeuSegredoForte"
 
 class ServiceUser {
     async FindAll(organizationId, transaction) {
@@ -61,8 +64,40 @@ class ServiceUser {
         if (!oldUser) {
             throw new Error('Usuario não encontrado!')
         }
-        oldUser.destroy({transaction})
+        oldUser.destroy({ transaction })
         return "Usuario deletado com sucesso!"
+    }
+
+    async Login(email, password, transaction) {
+        if (!email || !password) {
+            throw new Error("Favor informar email e senha")
+        }
+
+        const user = await ModelUser.findOne(
+            { where: { email } },
+            { transaction }
+        )
+        if (!user) {
+            throw new Error("Email ou Senha inválidos")
+        }
+
+        const verify = await bcrypt.compare(password, user.password)
+        if (verify) {
+            return jwt.sign({
+                id: user.id,
+                role: user.role,
+                organizationId: user.organizationId
+            }, secretKey, { expiresIn: 60 * 60 })
+        }
+
+        throw new Error("Email ou Senha inválidos")
+    }
+
+    async Verify(id, role, transaction){
+        return ModelUser.findOne(
+            { where: {id, role }, transaction }
+        )
+
     }
 
 }

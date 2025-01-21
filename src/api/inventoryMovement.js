@@ -1,9 +1,11 @@
+const { Transaction } = require('sequelize')
+const ServiceInventoryMoviment = require('../service/inventoryMovement')
+
 class ApiInventoryMovement {
     async FindById(req, res) {
         try {
-            const organizationId = 1
             const { id, inventoryId } = req.params
-            const inventoryMovement = {}
+            const inventoryMovement = await ServiceInventoryMoviment.FindById(inventoryId, id)
 
             res.status(200).send({ inventoryMovement })
         } catch (error) {
@@ -13,9 +15,8 @@ class ApiInventoryMovement {
     }
     async FindAll(req, res) {
         try {
-            const organizationId = 1
             const { inventoryId } = req.params
-            const inventoryMovement = [{}]
+            const inventoryMovement = await ServiceInventoryMoviment.FindAll(inventoryId)
 
             res.status(200).send({ inventoryMovement })
         } catch (error) {
@@ -25,11 +26,12 @@ class ApiInventoryMovement {
     }
     async Create(req, res) {
         try {
-            const organizationId = 1
-            const userId = 1
+            const userId = req.session.id
             const { inventoryId } = req.params
             const { type, amount, productId } = req.body
-            const inventoryMovement = {}
+            const inventoryMovement = await ServiceInventoryMoviment.Create(
+                inventoryId, userId, type, amount, productId
+            )
 
             res.status(200).send({ inventoryMovement })
         } catch (error) {
@@ -39,10 +41,11 @@ class ApiInventoryMovement {
     }
     async Update(req, res) {
         try {
-            const organizationId = 1
             const { id, inventoryId } = req.params
-            const { type, amount, productId } = req.body
-            const inventoryMovement = {}
+            const { type, amount} = req.body
+            const inventoryMovement = await ServiceInventoryMoviment.Update(
+                inventoryId, userId, type, amount
+            )
 
             res.status(200).send({ inventoryMovement })
         } catch (error) {
@@ -52,9 +55,8 @@ class ApiInventoryMovement {
     }
     async Delete(req, res) {
         try {
-            const organizationId = 1
             const { id, inventoryId } = req.params
-            const inventoryMovement = {}
+            const inventoryMovement = await ServiceInventoryMoviment.Delete(inventoryId, id)
 
             res.status(200).send({ inventoryMovement })
         } catch (error) {

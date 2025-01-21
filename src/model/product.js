@@ -17,8 +17,7 @@ class Product {
             },
             description: {
                 type: DataTypes.STRING,
-                allowNull: false,
-                unique: true
+                allowNull: false
             },
             organizationId: {
                 type: DataTypes.INTEGER,
