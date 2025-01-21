@@ -5,7 +5,7 @@ const inventoryRouter = express.Router()
 
 inventoryRouter.get('/', ApiInventory.FindAll)
 inventoryRouter.get('/:id', ApiInventory.FindById)
-inventoryRouter.post('/:id', ApiInventory.Create)
+inventoryRouter.post('/', ApiInventory.Create)
 inventoryRouter.put('/:id', ApiInventory.Update)
 inventoryRouter.delete('/:id', ApiInventory.Delete)
 
